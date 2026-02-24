@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Profile: {{ user.username }}</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Total Workouts:</strong> {{ user.workouts.count }}</p>
+        <p><strong>Total Exercises:</strong> {{ user.exercises.count }}</p>
+    </div>
+</div>
+
+<h4>Recent Workouts</h4>
+{% if recent_workouts %}
+<ul class="list-group">
+    {% for workout in recent_workouts %}
+    <li class="list-group-item d-flex justify-content-between">
+        <a href="{% url 'workout_detail' workout.pk %}">{{ workout.title }}</a>
+        <span class="text-muted">{{ workout.date }}</span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="text-muted">No workouts yet.</p>
+{% endif %}
+{% endblock %}
