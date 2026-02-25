@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card mb-4">
+        <div class="card-header">Workout Details</div>
+        <div class="card-body">
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">Exercises</div>
+        <div class="card-body">
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <div class="formset-row">
+                <div class="row">
+                    {% for field in form.visible_fields %}
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label small">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Workout</button>
+    <a href="{% url 'workout_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

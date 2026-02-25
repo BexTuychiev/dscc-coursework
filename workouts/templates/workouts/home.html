@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}GymTracker - Home{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>GymTracker</h1>
+    <p class="lead">Track your workouts, monitor your progress, and reach your fitness goals.</p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'workout_list' %}" class="btn btn-primary btn-lg">My Workouts</a>
+    {% else %}
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg me-2">Get Started</a>
+    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">Login</a>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center p-4">
+            <h3>Log Workouts</h3>
+            <p>Record your exercises, sets, reps, and weights for every session.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4">
+            <h3>Track Exercises</h3>
+            <p>Build your personal exercise library organized by muscle group.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center p-4">
+            <h3>Stay Consistent</h3>
+            <p>Keep a history of all your training sessions in one place.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

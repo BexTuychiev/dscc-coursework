@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}My Workouts{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>My Workouts</h2>
+    <a href="{% url 'workout_create' %}" class="btn btn-primary">+ New Workout</a>
+</div>
+
+{% if workouts %}
+<div class="row">
+    {% for workout in workouts %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card workout-card">
+            <div class="card-body">
+                <h5 class="card-title">{{ workout.title }}</h5>
+                <p class="text-muted">{{ workout.date }} &middot; {{ workout.duration_minutes }} min</p>
+                <p class="card-text">
+                    {{ workout.exercises.count }} exercise{{ workout.exercises.count|pluralize }}
+                </p>
+                {% if workout.notes %}
+                <p class="card-text small text-muted">{{ workout.notes|truncatewords:15 }}</p>
+                {% endif %}
+                <a href="{% url 'workout_detail' workout.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+    <p class="text-muted">No workouts yet. Start logging your first workout!</p>
+    <a href="{% url 'workout_create' %}" class="btn btn-primary">Log Your First Workout</a>
+</div>
+{% endif %}
+{% endblock %}
