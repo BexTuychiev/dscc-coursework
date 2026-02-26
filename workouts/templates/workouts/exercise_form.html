@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Exercise{% endblock %}
+
+{% block content %}
+<h2>Add Exercise</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-body">
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save Exercise</button>
+    <a href="{% url 'exercise_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+</form>
+{% endblock %}
